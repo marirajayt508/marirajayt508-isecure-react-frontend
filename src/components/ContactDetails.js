@@ -17,7 +17,7 @@ export const ContactDetails = () => {
   const [states,setState] = useState("")
   const [pincode,setPincode] = useState("")
   const [modalsts,setmodal] = useState(true)
-
+  const[disable,setdisable] = useState("form-control")
 
   const save = () =>{
   if (phno.trim().length != 10 || Number.isInteger(phno))
@@ -46,7 +46,7 @@ export const ContactDetails = () => {
   }
   else if (dist.trim() == "")
   {
-    toast.error("Please Enter Distric")
+    toast.error("Please Enter District")
   }
   else if (states.trim()=="")
   {
@@ -63,6 +63,7 @@ export const ContactDetails = () => {
     localStorage.setItem("ContactStatus",true)
     localStorage.setItem("usr_phno",code+" "+phno)
     localStorage.setItem("usr_email",email)
+    localStorage.setItem("code",code)
     localStorage.setItem("House",hno)
     localStorage.setItem("Area",area)
     localStorage.setItem("City",city)
@@ -113,9 +114,25 @@ const edit = () =>
   localStorage.clear("Distric")
   localStorage.clear("State")
   localStorage.clear("PinCode")
-  window. location. reload(false)
+  localStorage.clear("code")
+  window. location. reload()
 }
+const codes = () => {
+
+  return <select  class={disable} id="phcode" onChange={(e)=>setCode(e.target.value)} value={localStorage.getItem("code")} >
+  {
+    a.map((num)=>{
+      return <option>
+      {num.code} - ({num.dial_code})
+      </option>
+    })
+  }
+</select>
+
+}
+
     return <div>
+     
 <div class="container text-center">
   <br/><br/><br/>
   <span class="text-white"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contact Details&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></span><hr/>
@@ -131,15 +148,9 @@ const edit = () =>
         <hr class="alert-danger"/>
         <div class="row">
           <div class="col-md-3">
-          <select class="form-control" onChange={(e)=>setCode(e.target.value)}>
-            {
-              a.map((num)=>{
-                return <option>
-                {num.code} - ({num.dial_code})
-                </option>
-              })
-            }
-          </select>
+          {
+       codes()
+      }   
           </div>
           <div class="col-md-9">
           <input type="text" class="form-control" placeholder='Enter Your Phone Number' onChange={(e)=>setPhno(e.target.value)} value={localStorage.getItem("usr_phno")}/>
@@ -157,7 +168,7 @@ const edit = () =>
          &nbsp;
         </div>
         <div class="col-md-8">
-        <hr class="alert-danger"/>  <input type="email" placeholder="Enter Your Email ID" class="form-control" onChange={(e)=>{setEmail(e.target.value)}} value={localStorage.getItem("usr_dob")}/>          
+        <hr class="alert-danger"/>  <input type="email" placeholder="Enter Your Email ID" class="form-control" onChange={(e)=>{setEmail(e.target.value)}} value={localStorage.getItem("usr_email")}/>          
         </div>
         <div class="col-md-2" >
         &nbsp;
@@ -165,7 +176,7 @@ const edit = () =>
       </div>
       <hr/>
       <strong>Address</strong>
-      <div class="row">
+      <div class="row md-form">
       <div class="col-md-2">
          &nbsp;
         </div>
@@ -176,24 +187,24 @@ const edit = () =>
           <center>
       <div class="row">
 <div class="col-md-5">
-<input type="text" class="form-control" placeholder='HouseNo/StreetName' onChange={(e)=>setHno(e.target.value)}/>
+<input type="text" class="form-control" placeholder='HouseNo/StreetName' onChange={(e)=>setHno(e.target.value)} value={localStorage.getItem("House")}/>
 </div>
 <div class="col-md-3">
-<input type="text" class="form-control" placeholder='Area' onChange={(e)=>setArea(e.target.value)}/>
+<input type="text" class="form-control" placeholder='Area' onChange={(e)=>setArea(e.target.value)} value={localStorage.getItem("Area")}/>
 </div>
 <div class="col-md-4">
-<input type="text" class="form-control" placeholder='City' onChange={(e)=>setCity(e.target.value)}/>
+<input type="text" class="form-control" placeholder='City' onChange={(e)=>setCity(e.target.value)} value={localStorage.getItem("City")}/>
 </div>
         </div><br/>
         <div class="row">
 <div class="col-md-4">
-<input type="text" class="form-control" placeholder='District' onChange={(e)=>setDist(e.target.value)}/>
+<input type="text" class="form-control" placeholder='District' onChange={(e)=>setDist(e.target.value)} value={localStorage.getItem("Distric")}/>
 </div>
 <div class="col-md-4">
-<input type="text" class="form-control" placeholder='State' onChange={(e)=>setState(e.target.value)}/>
+<input type="text" class="form-control" placeholder='State' onChange={(e)=>setState(e.target.value)} value={localStorage.getItem("State")}/>
 </div>
 <div class="col-md-4">
-<input type="text" class="form-control" placeholder='Pincode' onChange={(e)=>setPincode(e.target.value)}/>
+<input type="text" class="form-control" placeholder='Pincode' onChange={(e)=>setPincode(e.target.value)} value={localStorage.getItem("PinCode")}/>
 </div>
         </div>
        </center>

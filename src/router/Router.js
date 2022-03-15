@@ -6,7 +6,7 @@ import { NotFound } from "../components/404";
 export const Routers = () => {
   return <BrowserRouter>
     <Routes>
-    <Route path='/' element={< Heropage />}/>
+    <Route path='/' element={< Heropage/>}/>
     <Route path="/BasicDetails" element={<BasicDetails/>} />
     <Route path="/ContactDetails" element={<ContactDetails/>} />
     <Route path="*" element={<NotFound/>}/>
