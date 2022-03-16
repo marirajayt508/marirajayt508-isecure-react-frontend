@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Modal from 'react-modal'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import {Navigate, useNavigate } from 'react-router-dom'
 
 toast.configure()
 export const BasicDetails = () => {
@@ -12,7 +13,7 @@ export const BasicDetails = () => {
   const [sts,setsts] = useState(true)
   const [modalsts,setmodal] = useState(true)
 
-
+  const navigate = useNavigate();
   const save = () =>{
   if (name.trim() =="")
   {
@@ -109,7 +110,7 @@ const edit = () =>
          &nbsp;
         </div>
         <div class="col-md-8">
-        <hr class="alert-danger"/><input type="text" class="form-control" placeholder='Enter Your full name Here' onChange={(e)=>setName(e.target.value)} value={localStorage.getItem("usr_name")}/>
+        <hr class="alert-danger"/><input type="text" class="form-control" placeholder='Enter Your name Here' onChange={(e)=>setName(e.target.value)} value={localStorage.getItem("usr_name")}/>
         </div>
         <div class="col-md-2" >
         &nbsp;
@@ -121,7 +122,7 @@ const edit = () =>
       <div class="col-md-2">
          &nbsp;
         </div>
-        <div class="col-md-8 ">
+        <div class="col-md-8">
         <hr class="alert-danger"/>  <input type="date" class="form-control" onChange={(e)=>{setdob(e.target.value)}} value={localStorage.getItem("usr_dob")}/>          
         </div>
         <div class="col-md-2" >
