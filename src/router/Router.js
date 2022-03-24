@@ -1,15 +1,25 @@
 import { Route,Routes,BrowserRouter } from "react-router-dom";
-import { Heropage } from "../components/HeroPage/HeroPage";
-import { BasicDetails } from "../components/BasicDetails";
-import { ContactDetails } from "../components/ContactDetails";
-import { NotFound } from "../components/404";
+import { Login } from "../components/login";
+import { Register } from "../components/register";
+import { ButnIndex } from "../components/buttonindex";
+import { Genpass } from "../components/genpassword";
+import { Home } from "../components/home";
+import { Tandc } from "../components/tandc";
+import { Tccontents } from "../tandccontent";
+import { Keypass } from "../components/keypass";
+import {Otp} from "../components/otp"
 export const Routers = () => {
   return <BrowserRouter>
     <Routes>
-    <Route path='/' element={< Heropage />}/>
-    <Route path="/BasicDetails" element={<BasicDetails/>} />
-    <Route path="/ContactDetails" element={<ContactDetails/>} />
-    <Route path="*" element={<NotFound/>}/>
+    <Route path='/' element={< Home />}/> 
+    <Route path='/ServiceLists' element={< ButnIndex />}/>
+    <Route path='/Register' element={< Login />}/>
+    <Route path='/Login' element={< Register />}/>
+    <Route path='/genpassword' element={< Genpass />}/>
+    <Route path='/tc' element={< Tandc />}/> 
+    <Route path='/tccontents' element={< Tccontents />}/> 
+    <Route path='/otp' element={< Otp />}/>
+    <Route path='/keypass' element={< Keypass />}/> 
     </Routes>
     </BrowserRouter>
 }

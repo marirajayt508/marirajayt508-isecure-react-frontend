@@ -1,0 +1,185 @@
+import '../Resources/Css/loginregister.css'
+import {useState} from 'react'
+import logo from '../Resources/Images/Logo/logo.png'
+import { useNavigate } from 'react-router-dom'
+import codes from '../Resources/Apis/CountryCodes.json'
+import {  toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios'
+import { Ping_Api } from '../settings'
+toast.configure()
+export const Login = () => {
+    const [firstname,setfirst] = useState("")
+    const [lastname,setlast] = useState("")
+    const [code,setcode] = useState("+91")
+    const [phno,setphno] = useState("")
+    const [email,setemail] = useState("")
+    const [pswd,setpswd] = useState("")
+    const [cpswd,setcpswd] = useState("")
+    const [proclass,setproclass] = useState("alert bg-danger")
+    const [prosts,setprosts] = useState("Your Password is too week")
+    const navigate = useNavigate()
+
+    const lowerCaseLetters = /[a-z]/g ;
+    var upperCaseLetters = /[A-Z]/g;
+    var numbers = /[0-9]/g;
+    var regex = /a-zA-Z0-9!@#\$%\^\&*\)\(+=._-/g
+
+    function login(){
+        navigate('/login')
+     }
+     const validate = () => {
+          if(firstname.trim()=="")
+          {
+              toast.error("First Name is Empty")
+          }
+         else if(lastname.trim()=="")
+          {
+            toast.error("Last Name is Empty")
+          }
+          else if(phno.trim()=="")
+          {
+            toast.error("Phone Number is Empty")
+          }
+          else if(phno.trim().length!=10 || isNaN(phno))
+          {
+            toast.error("Enter Valid Phone Number")
+          }
+          else if(email.trim()=="")
+          {
+            toast.error("Email is Empty")
+          }
+          else if((email.search("@")==-1))
+          {toast.error("Enter Valid Email")
+           if((email.search(".")==-1))
+            {
+              toast.error("Enter Valid Email")
+            }
+          }
+    
+          else if(pswd.trim()=="")
+          {
+            toast.error("Password is Empty")
+          }
+          else if(pswd.trim().length<8)
+          {
+            toast.error("Please Enter Minimum 8 letters password")
+          }
+          else if(pswd.trim().length<8)
+          {
+            toast.error("Please Enter Minimum 8 letters password")
+          }
+          else if(cpswd.trim()=="")
+          {
+            toast.error("Confrim Password is Empty")
+          }
+          else if(pswd!=cpswd)
+          {
+            toast.error("Password and Confrim password Not matched")
+          }
+          else
+          {
+            const register_datas = {
+            'name' : firstname+" "+lastname,
+            'firstname' : firstname,
+            'lastname' : lastname,
+            'code' : code,
+            'phonenumber' : phno,
+            'email' : email,
+            'password' : cpswd,
+            'key' : firstname.charAt(0)+lastname.charAt(0)+code+email.charAt(3)+email.charAt(4)+phno+pswd+firstname.charAt(0)+lastname.charAt(0)+code+email.charAt(3)+email.charAt(4)
+        }
+        axios.post(Ping_Api, register_datas)
+        .then(response => navigate('/otp',{state : register_datas})).catch((error)=>navigate('/otp',{state : false}))
+              
+          }
+
+     }
+     localStorage.setItem('email',true)
+
+   
+
+     const sts = (val) => {
+        setpswd(val)
+        let pattern = /[0-9]/;
+        let strong = /[!@#\$%\^\&*\)\(+=._-]/;
+        let result = pattern.test(pswd.trim());
+        let green = strong.test(pswd.trim());
+
+
+        if(pswd.trim().length>=8)
+        {
+           if(result)
+        {
+           setproclass("alert bg-secondary")
+           setprosts("Your Password is Strong")
+           if(green)
+           {
+              setproclass("alert bg-success")
+              setprosts("Your Password is Very Strong")
+           }
+           else{
+            setproclass("alert bg-secondary")
+            setprosts("Your Password is Strong")
+           }
+        }
+        else{
+          setproclass("alert bg-warning")
+          setprosts("Your Password Length is OK")
+        }
+        }
+        else  if(pswd.trim().length<8){
+            setproclass("alert bg-danger")  
+           setprosts("Your Password is too weak")
+        }
+     }
+     const csts = (a) => {
+      setcpswd(a)
+     }
+    
+    return <div>
+         <div class="parent">
+  <div class="last text-center">
+      <br/><br/><br/><br/>
+  <img class="img-control" src={logo} alt="This is logo image"/><hr class="hr-control-last"/>
+  <strong class="text-white "><b>iSecure</b></strong><hr class="hr-control-last"/>
+  <button class="btn btn-primary" onClick={()=>{login()}}>Login</button>
+  </div>
+  <div class="item text-center container">
+      <br/>
+      <strong class="text-white"><b>Register</b></strong>
+      <hr class="hr-control"/>
+  <div class="card container form-width md-form"><br/><br/>
+  <div class="container">
+  <div class="row">
+      <div class="col-md-6">
+      <input type="text" placeholder="Enter your First name" class="form-control" onChange={(e)=>{setfirst(e.target.value)}}/><br/>
+      </div>
+      <div class="col-md-6">
+      <input type="text" placeholder="Enter your Last name" class="form-control" onChange={(e)=>{setlast(e.target.value)}}/><br/>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-md-3">
+      <select class="form-control" onChange={(e)=>{setcode(e.target.value)}}>
+          {codes.map((a)=>{
+              return <option value={a.dial_code}>{a.dial_code}</option>
+          })}
+      </select>
+      </div>
+      <div class="col-md-9">
+      <input type="text" placeholder="Enter your phnone number" class="form-control" onChange={(e)=>{setphno(e.target.value)}}/><br/>
+      </div>
+  </div>
+  <input type="text" placeholder="Enter your email ID" class="form-control" onChange={(e)=>{setemail(e.target.value)}}/><br/>
+  <input type="password" placeholder="Enter your password" class="form-control" onChange={(e)=>{sts(e.target.value)}}/>  
+  {pswd!=""?<div><div class={proclass}>{prosts}</div></div>:<div><br/></div>}
+  <input type="password" placeholder="Enter yor confirm Password" class="form-control" onChange={(e)=>{csts(e.target.value)}}/><br/>
+   </div>  </div>     
+   <button class="btn btn-success" onClick={()=>validate()}>Register</button>
+ 
+  </div>
+  
+</div>
+    </div>
+}

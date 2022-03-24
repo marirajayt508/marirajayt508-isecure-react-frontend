@@ -1,0 +1,67 @@
+.parent {
+    display: flex;
+    font-family: arial, sans-serif;
+  }
+  
+  .item {
+    width: 70%;
+    padding: 2em;
+
+    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+    min-height: 730px;
+  }
+  
+  .last {
+    width: 40%;
+    padding: 2em;
+    background: rgb(179, 219, 199);
+    min-height: 730px;
+
+  }
+   .form-width{
+    width : 60%;
+   }
+   .hr-control{
+       width : 30%;
+   }
+   .hr-control-last{
+    width : 50%;
+}
+   .img-control{
+    width : 100%;
+    height: 40%;
+   }
+   .btn-control{
+       width : 40%;
+   }
+  @media screen and (max-width: 600px){
+    
+    .parent {
+      flex-direction: column-reverse;  
+    }
+    
+    .item {
+      width: auto;
+      min-height: 200px;
+    }
+    
+    .last {
+      background: #aa0000;
+    }
+    
+  }
+
+  input#file {
+    display: inline-block;
+    width: 100%;
+    padding: 100px 0 0 0;
+    height: 50px;
+    overflow: hidden;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background: url('https://cdn1.iconfinder.com/data/icons/hawcons/32/698394-icon-130-cloud-upload-512.png') center center no-repeat;
+    content: "Reference ";
+    border-radius: 20px;
+    background-size: 60px 60px;
+  }
