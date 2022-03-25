@@ -65,10 +65,7 @@ const resend = () =>{
         
       }
      }
-     if(window.event)
-     {
- window.location.href="/"
-      }
+
 
      if(state)
     {

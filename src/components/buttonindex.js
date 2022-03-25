@@ -5,10 +5,7 @@ import { useNavigate } from 'react-router-dom'
 export const ButnIndex = () => {
     localStorage.clear()
     sessionStorage.clear()
-    if(window.event)
-    {
-window.location.href="/"
-     }
+    sessionStorage.setItem('reg',true)
     const navigate = useNavigate()
     function register(){
        

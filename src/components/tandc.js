@@ -10,23 +10,22 @@ export const Tandc = () => {
     const [tgl,settgl] = useState(false)
     const navigate = useNavigate()
     const { state } = useLocation();
+    localStorage.setItem('regs',true)
     console.log(state);
-    sessionStorage.clear('emailsts')
-    localStorage.clear('email')
-    localStorage.clear('ia')
+
     function register(){
         navigate('/register')
      }
      console.log(state)
      const keypass = () => {
-       
+        
         toast.success("Keypass Download Started")
         axios.post(Encrypt_Api, state)
         .then(response => {keypass_gen(response.data)}).catch((error)=>navigate('/servererror',{state : null}))
         localStorage.setItem('ia',true)
         const Basic_db={
             'collection' : 'BaicDetails',
-            'name' : state['name'],
+            'name' : state['email'],
             'password' : state['password'] ,
             'key' : state['key'],
         }
@@ -69,7 +68,9 @@ export const Tandc = () => {
       }
 
      if(state)
-    {return <div>
+    {
+        if(sessionStorage.getItem('tc'))
+        {return <div>
          <div class="parent">
   <div class="last text-center">
       <br/><br/><br/><br/>
@@ -100,6 +101,32 @@ export const Tandc = () => {
   
 </div>
     </div>}
+    else{
+        return <div>
+       <div>
+        <div class="parent">
+ <div class="last text-center">
+     <br/><br/><br/><br/>
+ <img class="img-control" src={logo} alt="This is logo image"/><hr class="hr-control-last"/>
+ <strong class="text-white "><b>iSecure</b></strong><hr class="hr-control-last"/>
+ <button class="btn btn-warning" onClick={()=>navigate("/")}>Home</button>
+ </div>
+ <div class="item text-center container">
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+     <strong class="text-white"><b>Terms and Conditions</b></strong>
+     <hr class="hr-control"/>
+     <div>   
+  <button class="btn btn-success" onClick={()=>{navigate('/Register')}}>Register</button></div>
+ </div>
+ 
+ 
+</div>
+   </div>
+     </div>
+
+     
+    }
+    }
 else 
 {
     return <div>
