@@ -7,7 +7,10 @@ import {  toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 import HCaptcha from '@hcaptcha/react-hcaptcha';
-import { Ping_Api, Hcaptcha_sitekey, Check,Otp_Api} from '../settings'
+import { Ping_Api, Hcaptcha_sitekey, Check,Otp_Api, Google_Client_Id} from '../settings';
+import { v4 as uuidv4 } from 'uuid';
+import {Timer} from './countdown'
+
 toast.configure()
 export const Login = () => {
     const [firstname,setfirst] = useState("")
@@ -31,7 +34,7 @@ export const Login = () => {
     var numbers = /[0-9]/g;
     var regex = /a-zA-Z0-9!@#\$%\^\&*\)\(+=._-/g
 
-    
+
 
     function login(){
         navigate('/login')
@@ -166,9 +169,13 @@ function checkemail(data)
         setverists(true)
         toast.success("Email Verified")
       }
+      else if(otps != otpveri)
+      {
+        toast.error("OTP is Wrong try again")
+      }
       else
       {
-        toast.error("Email Not Verified")
+        toast.error("Email not varified,try again")
       }
     }
     sessionStorage.clear('tc')
@@ -181,7 +188,7 @@ function checkemail(data)
       'phonenumber' : phno,
       'email' : email,
       'password' : cpswd,
-      'key' : firstname.charAt(0)+lastname.charAt(0)+code+email.charAt(3)+email.charAt(4)+phno+pswd+firstname.charAt(0)+lastname.charAt(0)+code+email.charAt(3)+email.charAt(4)
+      'key' : uuidv4()
   }
   sessionStorage.setItem('tc',true)
     axios.post(Ping_Api, register_datas)
@@ -268,8 +275,10 @@ function checkemail(data)
  <div class="card container form-width md-form"><br/><br/>
  <div class="container">
  {!verists ? <div><code>Email : <b class="text-primary">{email}</b></code>
+ {resend ?  <div><br/><Timer time={60} onTimeover={(msg)=>{setresend(msg)}} msg={false}/></div>:''}
    <hr/>
-   {resend ? <div class="md-form"><input type="text" class="form-control" placeholder="Enter OTP" onChange={(e)=>{setotpveri(e.target.value)}}/><br/>
+   {resend ? <div class="md-form">
+     <input type="text" class="form-control" placeholder="Enter OTP" onChange={(e)=>{setotpveri(e.target.value)}}/><br/>
      <button class="btn btn-danger" onClick={()=>{submitotp()}} >Submit</button><button class="btn btn-info" onClick={()=>{sendotpf()}}>Resend OTP</button><button class="btn btn-warning" onClick={()=>{setotp(true)}} >Back</button></div>:<button class="btn btn-secondary" onClick={()=>{sendotpf()}}>send OTP</button>  }
    </div> : <div>
    <div><code>Email : <b class="text-primary">{email}</b></code>&nbsp;<span class="badge badge-success small">

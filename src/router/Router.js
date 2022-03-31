@@ -8,6 +8,7 @@ import { Tandc } from "../components/tandc";
 import { Tccontents } from "../tandccontent";
 import { Keypass } from "../components/keypass";
 import {Otp} from "../components/otp"
+import { DashBoard } from "../components/DashBoard/dashboard";
 export const Routers = () => {
   return <BrowserRouter>
     <Routes>
@@ -20,6 +21,7 @@ export const Routers = () => {
     <Route path='/tccontents' element={< Tccontents />}/> 
     <Route path='/otp' element={< Otp />}/>
     <Route path='/keypass' element={< Keypass />}/> 
+    <Route path="/DashBoard" element={<DashBoard/>}/>
     </Routes>
     </BrowserRouter>
 }

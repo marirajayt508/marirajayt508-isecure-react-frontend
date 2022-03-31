@@ -21,7 +21,7 @@ export const Tandc = () => {
         
         toast.success("Keypass Download Started")
         axios.post(Encrypt_Api, state)
-        .then(response => {keypass_gen(response.data)}).catch((error)=>navigate('/servererror',{state : null}))
+        .then((response) => {keypass_gen(response.data)}).catch((error)=>navigate('/servererror',{state : null}))
         localStorage.setItem('ia',true)
         const Basic_db={
             'collection' : 'BaicDetails',
@@ -52,14 +52,15 @@ export const Tandc = () => {
         .then(response => {console(response.data)}).catch((error)=>console.log(error))
      }
      const keypass_gen=(data)=>{
-         setedata(data)
-         download()
+         
+        setedata(data)
+         download(data)
          toast.success("Keypass Download Successfully...")
          settgl(true)
      }
-     const download= () => {
+     const download= (data) => {
         const element = document.createElement("a");
-        const file = new Blob([JSON.stringify(edata)], {type: 'json'});
+        const file = new Blob([JSON.stringify(data)], {type: 'json'});
         element.href = URL.createObjectURL(file);
         element.download = "keypass.json";
         document.body.appendChild(element); // Required for this to work in FireFox
@@ -116,7 +117,7 @@ export const Tandc = () => {
      <strong class="text-white"><b>Terms and Conditions</b></strong>
      <hr class="hr-control"/>
      <div>   
-  <button class="btn btn-success" onClick={()=>{navigate('/Register')}}>Register</button></div>
+  <button class="btn btn-success" onClick={()=>{navigate('/Login')}}>Login</button></div>
  </div>
  
  
